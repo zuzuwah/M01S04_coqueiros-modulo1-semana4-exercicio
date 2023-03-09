@@ -38,7 +38,6 @@ namespace M01S04
                         Repositório.AdicionarBebida(CadastrarBebida()); break;
                     case "2":
                         Repositório.AlterarBebida(SelecionarBebida()); break;
-                        break;
                     case "3":
                         Repositório.ExcluirBebida(SelecionarBebida().Id); break;
                     case "4":
@@ -46,7 +45,7 @@ namespace M01S04
                     case "5":
                         break;
                     default:
-                        Console.WriteLine("!opcaValida"); break;
+                        Console.WriteLine("Opção Inválida"); break;
                 }
             }
             while (Opcao != "5");
