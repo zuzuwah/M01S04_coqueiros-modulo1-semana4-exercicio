@@ -6,46 +6,58 @@ using System.Threading.Tasks;
 namespace M01S04
 {
     public static class Repositório
+{
+    private static List<Bebida> _bebidas = new List<Bebida>();
+    private static List<Suco> _sucos = new List<Suco>();
+    private static List<Refrigerante> _refrigerantes = new List<Refrigerante>();
+
+    public static List<Bebida> Bebidas
     {
-        public static List<Bebida> listaBebidas {get; set; }
-        
-        public static List<Suco> listaSucos {get; set; }
+        get { return _bebidas; }
+    }
 
-        public static List<Refrigerante> listaRefrigerante {get; set; }
+    public static List<Suco> Sucos
+    {
+        get { return _sucos; }
+    }
 
-        public static void AdicionarSuco (Suco suco)
+    public static List<Refrigerante> Refrigerantes
+    {
+        get { return _refrigerantes; }
+    }
+
+    public static void AdicionarSuco(Suco suco)
+    {
+        _sucos.Add(suco);
+    }
+
+    public static void AdicionarRefrigerante(Refrigerante refrigerante)
+    {
+        _refrigerantes.Add(refrigerante);
+    }
+
+    public static void AdicionarBebida(Bebida bebida)
+    {
+        _bebidas.Add(bebida);
+    }
+
+    public static void AlterarBebida(Bebida bebida)
+    {
+        int index = _bebidas.FindIndex(b => b.Id == bebida.Id);
+        if (index != -1)
         {
-            listaSucos.Add(suco);
-
+            _bebidas[index] = bebida;
         }
-
-        public static void AdicionarRefrigerante(Refrigerante refrigerante){
-            listaRefrigerante.Add(refrigerante);
-
-        }
-
-        public static void AdiconarBebida(Bebida bebida){
-            listaBebidas.Add(bebida);
-        }
-
-        public static void AlterarBebida (Bebida bebida){
-            bebida.NomeBebida = "Pepsi";
-        }
-
-        public static void ExcluirBebida (Bebida bebida){
-            
-            var bebidaParaExcluir = listaBebidas.FirstOrDefault(b => b.Id == bebida.Id);
-    
-    
-    if (bebidaParaExcluir != null)
-    {
-        listaBebidas.Remove(bebidaParaExcluir);
-        Console.WriteLine($"Bebida com ID {bebida.Id} excluída com sucesso.");
     }
-    else
+
+    public static void ExcluirBebida(int id)
     {
-        Console.WriteLine($"Bebida com ID {bebida.Id} não encontrada.");
+        _bebidas.RemoveAll(b => b.Id == id);
     }
-        }
+
+    public static List<Bebida> ListarBebidas()
+    {
+        return _bebidas;
+    }
     }
 }
