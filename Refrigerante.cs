@@ -6,27 +6,19 @@ using System.Threading.Tasks;
 namespace M01S04
 {
     public class Refrigerante : Bebida
+{
+    public bool Vidro { get; set; }
+    
+    public void ImprimirDados()
     {
-        public Refrigerante(int id, string refrigerante, string suco, decimal miliLitros, string nomeBebida, decimal valorcompra) : base(id, refrigerante, suco, miliLitros, nomeBebida, valorcompra)
-        {
-            this.Id = id;
-            this.Refrigerante = refrigerante;
-            this.Suco = suco;
-            this.MiliLitro = miliLitros;
-            this.NomeBebida = nomeBebida;
-            this.ValorCompra = valorcompra;
-        }
-
-        public bool vidro { get; set; }
-
-        void ImprimirDados(object id, object nomeBebida)
-        {
-            if (vidro == true){
-                Console.WriteLine($"O produto id {id} com nome {nomeBebida} é um refrigerante MiliLitros {MiliLitro} é um vidro ");
-        } while (vidro == false){
-            Console.WriteLine($"O produto id {id} com nome {nomeBebida} é um refrigerante MiliLitros {MiliLitro} é uma garrafa pet");
-
-        }
+        string tipoEmbalagem = Vidro ? "vidro" : "garrafa pet";
+        Console.WriteLine($"O produto id {Id} com nome {NomeBebida} é um refrigerante MiliLitros {MiliLitro} em {tipoEmbalagem}");
     }
-  }
+    
+    public Refrigerante(int id, string tipo, decimal miliLitro, string nomeBebida, decimal valorCompra, bool vidro) 
+        : base(id, tipo, miliLitro, nomeBebida, valorCompra)
+    {
+        Vidro = vidro;
+    }
+    }
 }
