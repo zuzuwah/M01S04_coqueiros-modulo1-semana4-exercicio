@@ -5,85 +5,121 @@ using System.Threading.Tasks;
 
 namespace M01S04
 {
-    public static class Menu
+   public class Menu
+{
+    public void Exibir()
     {
-        public static void DisplayInicial()
-        {
-            Console.Clear(); //Método que vai limpar os dados em tela
-            Console.WriteLine("\n"); //Quebra de linha com o \n e WriteLine
-            Console.WriteLine("Distribuidora de Bebidas:"); //Titulo do console
-            Console.WriteLine("*******************************************************"); //Corte da linha
-            Console.WriteLine("\n"); //Quebra de linha com o \n e WriteLine
-        }
+        int opcao = 0;
 
-         public static string consoleMenuPrincipal()
+        do
         {
-            Console.WriteLine("1 - Adicionar Bebida ");
-            Console.WriteLine("2 - Alterar Bebida ");
-            Console.WriteLine("3 - Excluir Bebida ");
-            Console.WriteLine("4 - Listar Bebidas ");
-            Console.WriteLine("5 - Sair ");
-            return Console.ReadLine();
-        }
+            Console.WriteLine("Selecione uma opção:");
+            Console.WriteLine("1 - Inserir Bebida");
+            Console.WriteLine("2 - Alterar Bebida");
+            Console.WriteLine("3 - Excluir Bebida");
+            Console.WriteLine("4 - Listar todas as Bebidas");
+            Console.WriteLine("5 - Listar todos os Sucos");
+            Console.WriteLine("6 - Listar todos os Refrigerantes");
+            Console.WriteLine("7 - Sair");
 
-            public static void opcaoMenuPrincipal()
-        {
-            string Opcao;
-            do
+            opcao = int.Parse(Console.ReadLine());
+
+            switch (opcao)
             {
-                Opcao = consoleMenuPrincipal();
-                switch(Opcao)
-                {
-                    case "1":
-                        Repositório.AdicionarBebida(CadastrarBebida()); break;
-                    case "2":
-                        Repositório.AlterarBebida(SelecionarBebida()); break;
-                    case "3":
-                        Repositório.ExcluirBebida(SelecionarBebida().Id); break;
-                    case "4":
-                        ListarBebidas(); break;
-                    case "5":
-                        break;
-                    default:
-                        Console.WriteLine("Opção Inválida"); break;
-                }
+                case 1:
+                    InserirBebida();
+                    break;
+                case 2:
+                    AlterarBebida();
+                    break;
+                case 3:
+                    Remover();
+                    break;
+                case 4:
+                    ListarTodasBebidas();
+                    break;
+                case 5:
+                    ListarTodosSucos();
+                    break;
+                case 6:
+                    ListarTodosRefrigerantes();
+                    break;
+                case 7:
+                    Console.WriteLine("Saindo do Menu...");
+                    break;
+                default:
+                    Console.WriteLine("Opção inválida. Tente novamente.");
+                    break;
             }
-            while (Opcao != "5");
+
+        } while (opcao != 7);
+    }
+
+        public void ListarTodosRefrigerantes()
+        {
+            Repositorio.ImprimirRefrigerante();
         }
 
-        private static void ListarBebidas()
+        public void ListarTodosSucos()
         {
-            foreach (Bebida bebida in Repositório.listaBebidas)
-            {
-                if (bebida is Suco suco)
-                {
-                    Console.WriteLine("Index: {0} - ID: {1} - Tipo: {2} - Tipo Caixa: {3}", Repositório.listaBebidas.IndexOf(bebida), bebida.Id, bebida.Tipo, suco.TipoCaixa);
-                }
-                else if (bebida is Refrigerante refrigerante)
-                {
-                    Console.WriteLine("Index: {0} - ID: {1} - Tipo: {2} - Vidro: {3}", Repositório.listaBebidas.IndexOf(bebida), bebida.Id, bebida.Tipo, refrigerante.vidro);
-                }
-                else
-                {
-                    Console.WriteLine("Index: {0} - ID: {1} - Tipo: {2}", Repositório.listaBebidas.IndexOf(bebida), bebida.Id, bebida.Tipo);
-                }
-            }
+            Repositorio.ImprimirSuco();
         }
 
-        private static Bebida SelecionarBebida()
+        public void ListarTodasBebidas()
         {
-            ListarBebidas();
-            int indexLista = int.Parse(Console.ReadLine());
-            Bebida bebida = Repositório.listaBebidas[indexLista];
-            return bebida;
+            Repositorio.Listar();
         }
 
-        public static Bebida CadastrarBebida()
+        public void Remover()
         {
-            Bebida bebida = new Bebida();
-            bebida.Id = int.Parse(Console.ReadLine());
-            bebida.Tipo = Console.ReadLine();
-            return bebida;
+            throw new NotImplementedException();
         }
+
+        public void AlterarBebida()
+        {
+            //throw new NotImplementedException();
+            Console.Write("\nDigite o nome da bebida a ser alterada: ");
+            string nome = Console.ReadLine();
+            Console.Write("Digite o novo tipo da bebida: ");
+            string novoTipo = Console.ReadLine();
+
+        try
+        {
+            Repositorio.Alterar();
+        }
+        catch (ArgumentException e)
+        {
+            Console.WriteLine($"Erro ao alterar bebida: {e.Message}");
+        }
+        }
+
+        public void InserirBebida()
+    {
+        Console.WriteLine("Digite o tipo da bebida:");
+        string tipo = Console.ReadLine();
+
+        Console.WriteLine("Digite a quantidade em mililitros:");
+        decimal ml = decimal.Parse(Console.ReadLine());
+
+        Console.WriteLine("Digite o nome da bebida:");
+        string nome = Console.ReadLine();
+
+        Console.WriteLine("Digite o valor de compra da bebida:");
+        decimal valor = decimal.Parse(Console.ReadLine());
+
+        Bebida bebida = new Bebida()
+        {
+            Tipo = tipo,
+            MiliLitro = ml,
+            NomeBebida = nome,
+            ValorCompra = valor
+        };
+
+        Repositorio.InserirBebida(bebida);
+
+        Console.WriteLine("Bebida adicionada com sucesso!");
+    }
+
+        
     }
 }
