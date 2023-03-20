@@ -9,7 +9,7 @@ namespace M01S04
 {
     public bool Vidro { get; set; }
     
-    public void ImprimirDados()
+    public override void ImprimirDados()
     {
         string tipoEmbalagem = Vidro ? "vidro" : "garrafa pet";
         Console.WriteLine($"O produto id {Id} com nome {NomeBebida} é um refrigerante MiliLitros {MiliLitro} em {tipoEmbalagem}");
