@@ -5,59 +5,89 @@ using System.Threading.Tasks;
 
 namespace M01S04
 {
-    public static class Repositório
-{
-    private static List<Bebida> _bebidas = new List<Bebida>();
-    private static List<Suco> _sucos = new List<Suco>();
-    private static List<Refrigerante> _refrigerantes = new List<Refrigerante>();
-
-    public static List<Bebida> Bebidas
+    public static class Repositorio
     {
-        get { return _bebidas; }
-    }
+        private static List<Bebida> ListaBebida { get; set; }
+        private static List<Suco> ListaSuco { get; set; }
+        private static List<Refrigerante> ListaRefrigerante { get; set; }
 
-    public static List<Suco> Sucos
-    {
-        get { return _sucos; }
-    }
-
-    public static List<Refrigerante> Refrigerantes
-    {
-        get { return _refrigerantes; }
-    }
-
-    public static void AdicionarSuco(Suco suco)
-    {
-        _sucos.Add(suco);
-    }
-
-    public static void AdicionarRefrigerante(Refrigerante refrigerante)
-    {
-        _refrigerantes.Add(refrigerante);
-    }
-
-    public static void AdicionarBebida(Bebida bebida)
-    {
-        _bebidas.Add(bebida);
-    }
-
-    public static void AlterarBebida(Bebida bebida)
-    {
-        int index = _bebidas.FindIndex(b => b.Id == bebida.Id);
-        if (index != -1)
+        static Repositorio()
         {
-            _bebidas[index] = bebida;
+            if (ListaBebida == null)
+            {
+                ListaBebida = new List<Bebida>();
+            }
+
+            if (ListaSuco == null)
+            {
+                ListaSuco = new List<Suco>();
+            }
+
+            if (ListaRefrigerante == null)
+            {
+                ListaRefrigerante = new List<Refrigerante>();
+            }
         }
-    }
 
-    public static void ExcluirBebida(int id)
-    {
-        _bebidas.RemoveAll(b => b.Id == id);
-    }
+        public static void InserirBebida(Bebida bebida)
+        {
+            ListaBebida.Add(bebida);
+        }
 
-    public static List<Bebida> ListarBebidas()
-    {
-        return _bebidas;
-    }
+        public static void InserirSuco(Suco suco)
+        {
+            ListaSuco.Add(suco);
+        }
+
+        public static void InserirRefrigerante(Refrigerante refrigerante)
+        {
+            ListaRefrigerante.Add(refrigerante);
+        }
+
+        public static void Alterar(Bebida bebida)
+        {
+            foreach (var item in ListaBebida.Where(listaEmMemoria => listaEmMemoria.Id == bebida.Id)) 
+            {
+                item.NomeBebida = bebida.NomeBebida;
+            }
+        }
+
+        public static void Remover(int id)
+        {
+          
+            var localBebida = ListaBebida.FirstOrDefault(w => w.Id == id);
+            if (localBebida != null)
+            {
+                ListaBebida.Remove(localBebida);
+            }
+        }
+
+        public static List<Bebida> Listar()
+        {
+            return ListaBebida;
+        }
+
+        public static void ImprimirSuco()
+        {
+            foreach (var suco in ListaSuco)
+            {
+                suco.ImprimirDados();
+            }
+        }
+
+        public static void ImprimirRefrigerante()
+        {
+            foreach (var refrigerante in ListaRefrigerante)
+            {
+                refrigerante.ImprimirDados();
+            }
+        }
+
+        internal static void Alterar()
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
